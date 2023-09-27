@@ -3,7 +3,13 @@ const prisma = new PrismaClient();
 async function main() {
   const alice = await prisma.user.upsert({
     where: { email: "alice@prisma.io" },
-    update: {},
+    update: {
+      profile: {
+        update: {
+          bio: "Alice's Profile!",
+        },
+      },
+    },
     create: {
       email: "alice@prisma.io",
       name: "Alice",
@@ -21,11 +27,22 @@ async function main() {
           },
         ],
       },
+      profile: {
+        create: {
+          bio: "Hello!",
+        },
+      },
     },
   });
   const bob = await prisma.user.upsert({
     where: { email: "bob@prisma.io" },
-    update: {},
+    update: {
+      profile: {
+        update: {
+          bio: "Bob's profile!",
+        },
+      },
+    },
     create: {
       email: "bob@prisma.io",
       name: "Bob",
@@ -43,6 +60,11 @@ async function main() {
             published: true,
           },
         ],
+      },
+      profile: {
+        create: {
+          bio: "This is my bio",
+        },
       },
     },
   });
