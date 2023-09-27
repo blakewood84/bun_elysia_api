@@ -1,16 +1,22 @@
 import { Elysia } from "elysia";
-
+import { PrismaClient } from "@prisma/client";
+import { user } from "./user";
 // Get User
 // Create User
 // Update User Name
+// Get All Users
 
 // Get Profile
-// Create Profile
+// Update Profile
+// Get All Profiles
 
-export const userGroup = (app: Elysia) =>
-  app.get("/user/:id", ({ params: { id } }) => {});
+// Posts
+// Get Posts belonging to a user
+// Get All Posts
 
-const app = new Elysia().state("version", 1);
+export const prisma = new PrismaClient();
+
+const app = new Elysia().use((app: Elysia) => user({ prisma, app }));
 
 app.listen(8080);
 
