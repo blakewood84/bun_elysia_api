@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { PrismaClient } from "@prisma/client";
-import { user } from "./user";
+import { user, users } from "./user";
 
 // Get Profile
 // Update Profile
@@ -12,7 +12,9 @@ import { user } from "./user";
 
 export const prisma = new PrismaClient();
 
-const app = new Elysia().use((app: Elysia) => user({ prisma, app }));
+const app = new Elysia()
+  .use((app: Elysia) => user({ prisma, app }))
+  .use((app: Elysia) => users({ prisma, app }));
 
 app.listen(8080);
 

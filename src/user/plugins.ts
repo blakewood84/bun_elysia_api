@@ -41,7 +41,7 @@ export const getAllUsers = ({
   prisma: PrismaClient;
   app: Elysia;
 }) =>
-  app.get("/all", async () => {
+  app.get("/users", async () => {
     const users = await prisma.user.findMany();
     return users;
   });
