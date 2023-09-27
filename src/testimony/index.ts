@@ -2,9 +2,6 @@ import type { PrismaClient } from "@prisma/client";
 import type { Elysia } from "elysia";
 import { t } from "elysia";
 
-// Posts
-// Get Posts belonging to a user
-// Get All Posts
 export const testimony = ({
   prisma,
   app,
@@ -56,6 +53,27 @@ export const testimony = ({
         {
           error() {
             return "Error retrieving testimonies.";
+          },
+        }
+      )
+      .get(
+        "/latest",
+        async () => {
+          const latest = await prisma.testimony.findMany({
+            orderBy: {
+              createdAt: "desc",
+            },
+            include: {
+              author: true,
+            },
+
+            take: 10,
+          });
+          return latest;
+        },
+        {
+          error() {
+            return "Error fetching latest testimonies!";
           },
         }
       )
