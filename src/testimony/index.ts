@@ -58,7 +58,10 @@ export const testimony = ({
       )
       .get(
         "/latest",
-        async () => {
+        // Query by page number.
+        async ({ query: { page = 0 } }) => {
+          // Every page will increment by 10. IE. page 1 = skip 10.
+          const skipAmount = Number(page) * 10;
           const latest = await prisma.testimony.findMany({
             orderBy: {
               createdAt: "desc",
@@ -66,7 +69,7 @@ export const testimony = ({
             include: {
               author: true,
             },
-
+            skip: skipAmount,
             take: 10,
           });
           return latest;
