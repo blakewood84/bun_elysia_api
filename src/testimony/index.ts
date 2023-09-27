@@ -1,5 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
 import type { Elysia } from "elysia";
+import { t } from "elysia";
 
 // Posts
 // Get Posts belonging to a user
@@ -55,6 +56,27 @@ export const testimony = ({
         {
           error() {
             return "Error retrieving testimonies.";
+          },
+        }
+      )
+      .post(
+        "/create",
+        async ({ body }) => {
+          return prisma.testimony.create({
+            data: {
+              ...body,
+            },
+          });
+        },
+        {
+          body: t.Object({
+            title: t.String(),
+            content: t.String(),
+            published: t.Boolean(),
+            authorId: t.Number(),
+          }),
+          error() {
+            return "Error during create testimony request!";
           },
         }
       )
