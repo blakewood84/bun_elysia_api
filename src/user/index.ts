@@ -11,11 +11,11 @@ import { createUser, getAllUsers, getUser } from "./plugins";
 export const user = ({ prisma, app }: { prisma: PrismaClient; app: Elysia }) =>
   app.group("/user", (app) =>
     app
-      // "/user/:id"
+      .get("/", () => "Nothing to see here 😎")
+      // "/user/userId/:id"
       .use(getUser({ prisma, app }))
       // "/user/create"
       .use(createUser({ prisma, app }))
+      // "/users/all"
+      .use(getAllUsers({ prisma, app }))
   );
-
-export const users = ({ prisma, app }: { prisma: PrismaClient; app: Elysia }) =>
-  app.use(getAllUsers({ prisma, app }));

@@ -10,19 +10,15 @@ export const getUser = ({
   app: Elysia<"/user">;
 }) =>
   app.get(
-    "/:id",
-    async ({ params: { id }, set }) => {
-      try {
-        const user = await prisma.user.findFirstOrThrow({
-          where: { id: Number(id) },
-        });
-        return user;
-      } catch (error) {
-        set.status = 403;
-        return null;
-      }
-    },
+    "/userId/:id",
+    async ({ params: { id } }) =>
+      prisma.user.findFirstOrThrow({
+        where: { id: Number(id) },
+      }),
     {
+      error() {
+        return "Error fetching user by id";
+      },
       response: t.Nullable(
         t.Object({
           id: t.Number(),
@@ -70,13 +66,19 @@ export const getAllUsers = ({
   app,
 }: {
   prisma: PrismaClient;
-  app: Elysia;
+  app: Elysia<"/user">;
 }) =>
-  app.get("/users", async () => {
-    const users = await prisma.user.findMany({
-      include: {
-        posts: true,
+  app.get(
+    "/all",
+    async () =>
+      prisma.user.findMany({
+        include: {
+          posts: true,
+        },
+      }),
+    {
+      error() {
+        return "Error fetching all users";
       },
-    });
-    return users;
-  });
+    }
+  );
