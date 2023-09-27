@@ -2,7 +2,6 @@ import type { Elysia } from "elysia";
 import { t } from "elysia";
 import type { PrismaClient } from "@prisma/client";
 
-// Update Profile
 export const profile = ({
   prisma,
   app,
