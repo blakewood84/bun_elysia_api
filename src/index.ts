@@ -1,10 +1,6 @@
 import { Elysia } from "elysia";
 import { PrismaClient } from "@prisma/client";
 import { user } from "./user";
-// Get User
-// Create User
-// Update User Name
-// Get All Users
 
 // Get Profile
 // Update Profile
