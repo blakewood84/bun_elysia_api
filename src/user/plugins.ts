@@ -33,6 +33,37 @@ export const getUser = ({
     }
   );
 
+/**
+ * Endpoint - "/user/create"
+ *
+ * Creates a new user.
+ */
+export const createUser = ({
+  prisma,
+  app,
+}: {
+  prisma: PrismaClient;
+  app: Elysia<"/user">;
+}) =>
+  app.post(
+    "/create",
+    ({ body }) =>
+      prisma.user.create({
+        data: body,
+      }),
+    {
+      body: t.Object({
+        email: t.String(),
+        name: t.String(),
+      }),
+      error({ code, error }) {
+        console.log("CODE: ", code);
+        console.log("ERROR: ", error);
+        return "Error creating user!";
+      },
+    }
+  );
+
 // Add Paginated Results
 export const getAllUsers = ({
   prisma,
