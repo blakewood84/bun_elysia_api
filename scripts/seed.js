@@ -1,75 +1,84 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 async function main() {
-  const alice = await prisma.user.upsert({
-    where: { email: "alice@prisma.io" },
+  const andy = await prisma.user.upsert({
+    where: { email: "andy@testemail.io" },
     update: {
       profile: {
-        update: {
-          bio: "Alice's Profile!",
+        create: {
+          bio: null,
         },
       },
     },
     create: {
-      email: "alice@prisma.io",
-      name: "Alice",
+      email: "andy@testemail.io",
+      name: "Andy",
       posts: {
         create: [
           {
-            title: "My First Testimony",
-            content: "Hello content 1.",
+            title: "Andy's First Testimony",
+            content: "<p>Andy's content</p>",
             published: true,
           },
           {
-            title: "My Second Testimony",
+            title: "Andy's Second Testimony",
             content: "Hello content 2.",
+            published: true,
+          },
+          {
+            title: "Andy's Third Testimony",
+            content: "Hello content 3.",
             published: true,
           },
         ],
       },
       profile: {
         create: {
-          bio: "Hello!",
+          bio: null,
         },
       },
     },
   });
-  const bob = await prisma.user.upsert({
-    where: { email: "bob@prisma.io" },
+  const drew = await prisma.user.upsert({
+    where: { email: "drew@testemail.io" },
     update: {
       profile: {
-        update: {
-          bio: "Bob's profile!",
+        create: {
+          bio: null,
         },
       },
     },
     create: {
-      email: "bob@prisma.io",
-      name: "Bob",
+      email: "drew@testemail.io",
+      name: "Drew",
       posts: {
         create: [
           {
-            title: "Follow Prisma on Twitter",
+            title: "Hey Guys! How's everyone?",
             content: "<div><h1>Some Content</h1></div>",
             published: true,
           },
           {
-            title: "Follow Nexus on Twitter",
-            content:
-              "<p><a href='https://twitter.com/nexusgql' target='_blank'>https://twitter.com/nexusgql</a></p>",
+            title: "God is good always!",
+            content: "<p>God is good always content.</p>",
+            published: true,
+          },
+          {
+            title: "Drew's Third Testimony",
+            content: "Hello content 3.",
             published: true,
           },
         ],
       },
       profile: {
         create: {
-          bio: "This is my bio",
+          bio: null,
         },
       },
     },
   });
   console.log("Complete!");
-  console.log({ alice, bob });
+  console.log({ drew, andy });
 }
 main()
   .then(async () => {
