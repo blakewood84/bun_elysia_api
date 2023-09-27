@@ -21,6 +21,7 @@ const app = new Elysia()
     ({ getDate, store: { version }, authorization }) =>
       `version: ${version} - date: ${getDate()} - auth: ${authorization}`
   )
+  .post("/search", ({ query }) => query)
   .use(plugin)
   .use(
     plugin2({

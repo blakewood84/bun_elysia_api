@@ -11,16 +11,7 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Track {
-  id Int @id @default(autoincrement())
-  title String
-  genre String
-  createdAt DateTime @default(now())
-  imageUrl String
-  mediaUrl String
-}
-
-model Post {
+model Testimony {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -44,6 +35,6 @@ model User {
   id      Int      @id @default(autoincrement())
   email   String   @unique
   name    String?
-  posts   Post[]
+  posts   Testimony[]
   profile Profile?
 }
