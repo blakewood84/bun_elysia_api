@@ -8,11 +8,18 @@ async function main() {
       email: "alice@prisma.io",
       name: "Alice",
       posts: {
-        create: {
-          title: "Check out Prisma with Next.js",
-          content: "https://www.prisma.io/nextjs",
-          published: true,
-        },
+        create: [
+          {
+            title: "My First Testimony",
+            content: "Hello content 1.",
+            published: true,
+          },
+          {
+            title: "My Second Testimony",
+            content: "Hello content 2.",
+            published: true,
+          },
+        ],
       },
     },
   });
@@ -26,12 +33,13 @@ async function main() {
         create: [
           {
             title: "Follow Prisma on Twitter",
-            content: "https://twitter.com/prisma",
+            content: "<div><h1>Some Content</h1></div>",
             published: true,
           },
           {
             title: "Follow Nexus on Twitter",
-            content: "https://twitter.com/nexusgql",
+            content:
+              "<p><a href='https://twitter.com/nexusgql' target='_blank'>https://twitter.com/nexusgql</a></p>",
             published: true,
           },
         ],
