@@ -2,6 +2,7 @@ import { Elysia } from "elysia";
 import { PrismaClient } from "@prisma/client";
 import { user, users } from "./user";
 import { testimony } from "./testimony";
+import { profile } from "./profile";
 
 // Get Profile
 // Update Profile
@@ -13,6 +14,7 @@ const app = new Elysia()
   .use((app: Elysia) => user({ prisma, app }))
   .use((app: Elysia) => users({ prisma, app }))
   .use((app: Elysia) => testimony({ prisma, app }))
+  .use((app: Elysia) => profile({ prisma, app }))
   .listen(8080);
 
 console.log(

@@ -1,8 +1,48 @@
-import { Elysia } from "elysia";
+import type { Elysia } from "elysia";
+import { t } from "elysia";
 import type { PrismaClient } from "@prisma/client";
-import { getUserPlugin } from "./plugins";
 
-export const profile = ({ prisma }: { prisma: PrismaClient }) =>
-  new Elysia({ prefix: "/user", name: "user" }).use(
-    getUserPlugin({ prisma, app: new Elysia() })
+// Update Profile
+export const profile = ({
+  prisma,
+  app,
+}: {
+  prisma: PrismaClient;
+  app: Elysia;
+}) =>
+  app.group("/profile", (app) =>
+    app
+      .get("/", () => "Nothing to see here!")
+      .get(
+        "/user/:id",
+        async ({ params: { id } }) =>
+          prisma.profile.findUniqueOrThrow({ where: { userId: Number(id) } }),
+        {
+          error({ code, error }) {
+            console.log("CODE: ", code);
+            console.log("ERROR: ", error);
+            return "Cannot find user!";
+          },
+        }
+      )
+      .put(
+        "/update/:id",
+        async ({ params: { id }, body }) =>
+          prisma.profile.update({
+            where: {
+              id: Number(id),
+            },
+            data: body,
+          }),
+        {
+          body: t.Object({
+            bio: t.String(),
+          }),
+          error({ code, error }) {
+            console.log("CODE: ", code);
+            console.log("ERROR: ", error);
+            return "Unable to update profile!";
+          },
+        }
+      )
   );
