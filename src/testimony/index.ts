@@ -13,7 +13,9 @@ export const testimony = ({
 }) =>
   app.group("/testimony", (app) =>
     app
+      // Generic route
       .get("/", () => "Nothing to see here!")
+      // Retrieve a testimony by id
       .get(
         "/post/:id",
         async ({ params: { id } }) => {
@@ -28,5 +30,32 @@ export const testimony = ({
           },
         }
       )
-      .get("/all", () => {})
+      // Retrieve all testimonies of a given authorId
+      .get(
+        "/user/:id",
+        async ({ params: { id } }) => {
+          const testimonies = await prisma.testimony.findMany({
+            where: { authorId: Number(id) },
+          });
+          return testimonies;
+        },
+        {
+          error() {
+            return "Error retrieving testimonies for user";
+          },
+        }
+      )
+      // Retrieve all testimonies
+      .get(
+        "/all",
+        async () => {
+          const testimonies = await prisma.testimony.findMany();
+          return testimonies;
+        },
+        {
+          error() {
+            return "Error retrieving testimonies.";
+          },
+        }
+      )
   );
