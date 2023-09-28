@@ -4,10 +4,6 @@ import { user } from "./user";
 import { testimony } from "./testimony";
 import { profile } from "./profile";
 
-// Get Profile
-// Update Profile
-// Get All Profiles
-
 export const prisma = new PrismaClient();
 
 const app = new Elysia()
